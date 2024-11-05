@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
 import React from "react";
 
 export default function LoginModal({
@@ -10,7 +12,7 @@ export default function LoginModal({
   form,
 }) {
   return (
-    <div className="modal show d-block" tabindex="-1">
+    <div className="modal show d-block" tabIndex="-1">
       <div className="modal-dialog modal-dialog-centered">
         <div className="modal-content">
           <div className="modal-header bg-primary text-white">
@@ -19,7 +21,7 @@ export default function LoginModal({
           <div className="modal-body">
             {error && (
               <div className="alert alert-danger">
-                <i class="bi bi-exclamation-triangle me-2"></i>
+                <i className="bi bi-exclamation-triangle me-2"></i>
                 {error}
               </div>
             )}

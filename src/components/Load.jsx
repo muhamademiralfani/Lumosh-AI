@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from 'react'
 
 export default function Load() {
@@ -19,28 +20,28 @@ export default function Load() {
           <path
             d="M28 35 Q35 30, 42 35"
             stroke="#333"
-            stroke-width="2"
+            strokeWidth="2"
             fill="none"
           />
           <path
             d="M58 35 Q65 30, 72 35"
             stroke="#333"
-            stroke-width="2"
+            strokeWidth="2"
             fill="none"
           />
 
           <path
             d="M40 65 Q50 75, 60 65"
             stroke="#333"
-            stroke-width="2"
+            strokeWidth="2"
             fill="none"
           />
 
           <text
             x="50"
             y="10"
-            font-size="35"
-            text-anchor="middle"
+            fontSize="35"
+            textAnchor="middle"
             fill="#0d6efd"
           >
             ?

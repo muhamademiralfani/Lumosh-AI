@@ -1,100 +1,83 @@
-import React, { Component } from "react";
-import ChatInput from "../components/ChatInput";
-import ChatMessage from "../components/ChatMessage";
-import Navbar from "../components/Navbar";
-import Load from "../components/Load";
-import { queryAI, logout } from "../utils/api";
+/* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
+import React, { useState, useEffect, createRef } from 'react';
+import ChatInput from '../components/ChatInput';
+import ChatMessage from '../components/ChatMessage';
+import Navbar from '../components/Navbar';
+import Load from '../components/Load';
+import { queryAI, logout } from '../utils/api';
 
-export default class ChatContainer extends Component {
-  state = {
-    messages: [],
-    loading: false,
-    error: null,
-    query: "",
-  };
+const ChatContainer = ({ token, setToken }) => {
+  const [messages, setMessages] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [query, setQuery] = useState('');
 
-  endOfMessagesRef = React.createRef();
+  const endOfMessagesRef = createRef();
 
-  handleQuery = (e) => {
+  const handleQuery = (e) => {
     e.preventDefault();
-    this.scrollToBottom();
-    const { query } = this.state;
-    this.setState({ loading: true, error: null });
+    scrollToBottom();
+    setLoading(true);
+    setError(null);
 
-    queryAI({ query }, this.props.token)
+    console.log(query);
+
+    queryAI({ query }, token)
       .then((res) => {
-        this.setState({
-          messages: [...this.state.messages, { query, data: res }],
-          query: "",
-        });
+        setMessages([...messages, { query, data: res }]);
+        setQuery('');
       })
       .catch((err) => {
-        this.setState({ error: err.message });
+        setError(err.message);
       })
       .finally(() => {
-        this.setState({ loading: false });
+        setLoading(false);
       });
   };
 
-  handleChange = (e) => {
-    this.setState({ query: e.target.value });
+  const handleChange = (e) => {
+    setQuery(e.target.value);
   };
 
-  // Lifecycle method untuk scroll otomatis ke bawah saat ada pesan baru
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.messages !== this.state.messages) {
-      this.scrollToBottom();
-    }
-  }
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
-  scrollToBottom = () => {
-    this.endOfMessagesRef.current.scrollIntoView({ behavior: "smooth" });
+  const scrollToBottom = () => {
+    endOfMessagesRef.current.scrollIntoView({ behavior: 'smooth' });
   };
 
-  handleLogout = () => {
-    this.setState({ loading: true });
-    logout(this.props.token)
+  const handleLogout = () => {
+    setLoading(true);
+    logout(token)
       .then(() => {
-        this.props.setToken(null);
-        localStorage.removeItem("token");
+        setToken(null);
+        localStorage.removeItem('token');
       })
       .catch((err) => {
         console.log(err);
       })
       .finally(() => {
-        this.setState({ loading: false });
+        setLoading(false);
       });
   };
 
-  render() {
-    return (
-      <div>
-        <Navbar logout={this.handleLogout} loading={this.state.loading} />
-        <div className="container">
-          {this.state.loading && this.state.messages.length === 0 ? (
-            <Load />
-          ) : (
-            this.state.messages.map((message, index) => (
-              <ChatMessage
-                key={index}
-                message={message.data.data}
-                query={message.query}
-                isLoading={this.state.loading}
-                lastArray={index === this.state.messages.length - 1}
-                currentQuery={this.state.query}
-              />
-            ))
-          )}
-          {/* Elemen referensi untuk scroll otomatis */}
-          <div ref={this.endOfMessagesRef} />
-        </div>
-        <ChatInput
-          onSubmit={this.handleQuery}
-          onChange={this.handleChange}
-          loading={this.state.loading}
-          query={this.state.query}
-        />
+  return (
+    <div>
+      <Navbar logout={handleLogout} loading={loading} />
+      <div className='container'>
+        {loading && messages.length === 0 ? (
+          <Load />
+        ) : (
+          messages.map((message, index) => <ChatMessage key={index} message={message.data.data} query={message.query} isLoading={loading} lastArray={index === messages.length - 1} currentQuery={query} />)
+        )}
+        {/* Elemen referensi untuk scroll otomatis */}
+        <div ref={endOfMessagesRef} />
       </div>
-    );
-  }
-}
+      <ChatInput onSubmit={handleQuery} onChange={handleChange} loading={loading} query={query} />
+    </div>
+  );
+};
+
+export default ChatContainer;

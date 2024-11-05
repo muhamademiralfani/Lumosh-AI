@@ -1,21 +1,19 @@
-import React, { Component } from "react";
-import AuthContainer from "./containers/AuthContainer";
-import ChatContainer from "./containers/ChatContainer";
+/* eslint-disable no-unused-vars */
+import React, { useState } from 'react';
+import AuthContainer from './containers/AuthContainer';
+import ChatContainer from './containers/ChatContainer';
 
-export default class App extends Component {
-  state = {
-    token: null,
+const App = () => {
+  // state = {
+  //   token: null,
+  // };
+  const [token, setToken] = useState(null);
+
+  const handlesetToken = (token) => {
+    setToken(token);
   };
 
-  setToken = (token) => {
-    this.setState({ token });
-  };
+  return token ? <ChatContainer token={token} setToken={handlesetToken} /> : <AuthContainer setToken={handlesetToken} />;
+};
 
-  render() {
-    return this.state.token ? (
-      <ChatContainer token={this.state.token} setToken={this.setToken} />
-    ) : (
-      <AuthContainer setToken={this.setToken} />
-    );
-  }
-}
+export default App;
