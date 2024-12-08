@@ -6,7 +6,7 @@ export const login = async (data) => {
   const res = await axios.post(`${API_URL}/login`, data, {
     headers: {
       "Content-Type": "application/json",
-      "x-api-key": "RJS1-202401",
+      "x-api-key": "RJS1-202413",
     },
   });
   return res.data;
@@ -16,7 +16,7 @@ export const register = async (data) => {
   const res = await axios.post(`${API_URL}/register`, data, {
     headers: {
       "Content-Type": "application/json",
-      "x-api-key": "RJS1-202401",
+      "x-api-key": "RJS1-202413",
     },
   });
   return res.data;
@@ -26,7 +26,7 @@ export const queryAI = async (data, token) => {
   const res = await axios.post(`${API_URL}/query`, data, {
     headers: {
       "Content-Type": "application/json",
-      "x-api-key": "RJS1-202401",
+      "x-api-key": "RJS1-202413",
       "Authorization": `Bearer ${token}`,
     },
   });
@@ -37,7 +37,7 @@ export const logout = async (token) => {
   const res = await axios.post(`${API_URL}/logout`, {}, {
     headers: {
       "Content-Type": "application/json",
-      "x-api-key": "RJS1-202401",
+      "x-api-key": "RJS1-202413",
       "Authorization": `Bearer ${token}`,
     },
   });
