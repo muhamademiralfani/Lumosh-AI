@@ -4,11 +4,8 @@ import AuthContainer from './containers/AuthContainer';
 import ChatContainer from './containers/ChatContainer';
 
 const App = () => {
-  // state = {
-  //   token: null,
-  // };
+  
   const [token, setToken] = useState(null);
-
   const handlesetToken = (token) => {
     setToken(token);
   };

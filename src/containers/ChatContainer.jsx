@@ -21,8 +21,6 @@ const ChatContainer = ({ token, setToken }) => {
     setLoading(true);
     setError(null);
 
-    console.log(query);
-
     queryAI({ query }, token)
       .then((res) => {
         setMessages([...messages, { query, data: res }]);
@@ -30,6 +28,7 @@ const ChatContainer = ({ token, setToken }) => {
       })
       .catch((err) => {
         setError(err.message);
+        console.log(error);
       })
       .finally(() => {
         setLoading(false);
@@ -56,7 +55,7 @@ const ChatContainer = ({ token, setToken }) => {
         localStorage.removeItem('token');
       })
       .catch((err) => {
-        console.log(err);
+        setError(err.message);
       })
       .finally(() => {
         setLoading(false);

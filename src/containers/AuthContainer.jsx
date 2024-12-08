@@ -12,6 +12,7 @@ const AuthContainer = ({ setToken }) => {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
